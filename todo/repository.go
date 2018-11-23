@@ -7,11 +7,11 @@ import (
 )
 
 type TodoRepository struct {
-	DB driver.DBHandler
+	driver.DBHandler
 }
 
 func (r *TodoRepository) Find(id int) (Todo, error) {
-	row, err := r.DB.Query(fmt.Sprintf("SELECT * FROM todos WHERE id = '%d'", id))
+	row, err := r.Query(fmt.Sprintf("SELECT * FROM todos WHERE id = '%d'", id))
 
 	if err != nil {
 		return Todo{}, err
@@ -26,7 +26,7 @@ func (r *TodoRepository) Find(id int) (Todo, error) {
 
 func (r *TodoRepository) FindAll() ([]Todo, error) {
 
-	rows, err := r.DB.Query(fmt.Sprintf("SELECT * FROM todos"))
+	rows, err := r.Query(fmt.Sprintf("SELECT * FROM todos"))
 
 	if err != nil {
 		return []Todo{}, err
@@ -47,7 +47,7 @@ func (r *TodoRepository) FindAll() ([]Todo, error) {
 }
 
 func (r *TodoRepository) Store(todo Todo) (int64, error) {
-	res, err := r.DB.Execute(fmt.Sprintf("INSERT INTO todos(name) VALUES ('%s')", todo.Name))
+	res, err := r.Execute(fmt.Sprintf("INSERT INTO todos(name) VALUES ('%s')", todo.Name))
 
 	if err != nil {
 		return 0, err
