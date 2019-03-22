@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/opam22/clean/config"
+	"github.com/opam22/form/config"
 )
 
 func main() {

@@ -3,7 +3,7 @@ package todo
 import (
 	"fmt"
 
-	"github.com/opam22/clean/driver"
+	"github.com/opam22/form/driver"
 )
 
 type TodoRepository struct {
@@ -19,7 +19,7 @@ func (r *TodoRepository) Find(id int) (Todo, error) {
 
 	var todo Todo
 	row.Next()
-	row.Scan(&todo.Id, &todo.Name)
+	row.Scan(&todo.Id, &todo.Todo)
 
 	return todo, nil
 }
@@ -37,7 +37,7 @@ func (r *TodoRepository) FindAll() ([]Todo, error) {
 		todos []Todo
 	)
 	for rows.Next() {
-		rows.Scan(&todo.Id, &todo.Name)
+		rows.Scan(&todo.Id, &todo.Todo)
 
 		todos = append(todos, todo)
 
@@ -47,7 +47,7 @@ func (r *TodoRepository) FindAll() ([]Todo, error) {
 }
 
 func (r *TodoRepository) Store(todo Todo) (int64, error) {
-	res, err := r.Execute(fmt.Sprintf("INSERT INTO todos(name) VALUES ('%s')", todo.Name))
+	res, err := r.Execute(fmt.Sprintf("INSERT INTO todos(name) VALUES ('%s')", todo.Todo))
 
 	if err != nil {
 		return 0, err

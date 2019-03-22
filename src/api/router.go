@@ -1,12 +1,14 @@
 package main
 
 import (
+	"database/sql"
 	"sync"
 	"time"
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 	"github.com/go-chi/render"
+	"github.com/opam22/form/config"
 )
 
 type Router interface {
@@ -17,7 +19,13 @@ type router struct{}
 
 func (router *router) Init() *chi.Mux {
 
-	todo := Depedency().InjectTodo()
+	sqlConn, err := sql.Open("mysql", config.MYSQL_HOST)
+
+	if err != nil {
+		panic(err)
+	}
+
+	todo := Depedency().InjectTodo(sqlConn)
 
 	r := chi.NewRouter()
 

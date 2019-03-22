@@ -2,16 +2,15 @@ package driver
 
 import (
 	"database/sql"
-	"fmt"
 
-	_ "github.com/go-sql-driver/mysql"
+	_ "github.com/lib/pq"
 )
 
-type MySQLHandler struct {
+type PostgresHandler struct {
 	Conn *sql.DB
 }
 
-func (handler *MySQLHandler) Execute(statement string) (sql.Result, error) {
+func (handler *PostgresHandler) Execute(statement string) (sql.Result, error) {
 	res, err := handler.Conn.Exec(statement)
 	if err != nil {
 		return nil, err
@@ -20,11 +19,10 @@ func (handler *MySQLHandler) Execute(statement string) (sql.Result, error) {
 	return res, nil
 }
 
-func (handler *MySQLHandler) Query(statement string) (Row, error) {
+func (handler *PostgresHandler) Query(statement string) (Row, error) {
 	rows, err := handler.Conn.Query(statement)
 
 	if err != nil {
-		fmt.Println(err)
 		return new(MySQLRow), err
 	}
 	row := new(MySQLRow)
@@ -33,11 +31,11 @@ func (handler *MySQLHandler) Query(statement string) (Row, error) {
 	return row, nil
 }
 
-type MySQLRow struct {
+type PostgresRow struct {
 	Rows *sql.Rows
 }
 
-func (r MySQLRow) Scan(dest ...interface{}) error {
+func (r PostgresRow) Scan(dest ...interface{}) error {
 	err := r.Rows.Scan(dest...)
 	if err != nil {
 		return err
@@ -46,6 +44,6 @@ func (r MySQLRow) Scan(dest ...interface{}) error {
 	return nil
 }
 
-func (r MySQLRow) Next() bool {
+func (r PostgresRow) Next() bool {
 	return r.Rows.Next()
 }

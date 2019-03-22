@@ -4,20 +4,18 @@ import (
 	"database/sql"
 	"sync"
 
-	"github.com/opam22/clean/config"
-	"github.com/opam22/clean/driver"
-	"github.com/opam22/clean/todo"
+	"github.com/opam22/form/driver"
+	"github.com/opam22/form/pkg/todo"
 )
 
 type DepedencyInjector interface {
-	InjectTodo() todo.TodoController
+	InjectTodo(sqlConn *sql.DB) todo.TodoController
 }
 
 type depedency struct{}
 
-func (d *depedency) InjectTodo() todo.TodoController {
+func (d *depedency) InjectTodo(sqlConn *sql.DB) todo.TodoController {
 
-	sqlConn, _ := sql.Open("mysql", config.MYSQL_HOST)
 	DBHandler := &driver.MySQLHandler{}
 	DBHandler.Conn = sqlConn
 
