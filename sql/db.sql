@@ -20,6 +20,7 @@ CREATE TABLE users (
     name varchar(100) NOT NULL,
     email varchar(100) NOT NULL,
     password int NOT NULL,
+    activision_code varchar(255) NOT NULL,
     status tinyint(2) NOT NULL,
     created_at DATETIME NOT NULL,
     updated_at DATETIME NOT NULL,
