@@ -13,68 +13,66 @@ CREATE TABLE users (
     password varchar(255) NOT NULL,
     activation_code varchar(255) NOT NULL,
     status tinyint(2) NOT NULL,
-    created_at DATETIME NOT NULL,
-    updated_at DATETIME NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMP NOT NULL DEFAULT NOW() ON UPDATE now(),
     PRIMARY KEY (id)
 );
-ALTER TABLE users
-MODIFY created_at datetime DEFAULT CURRENT_TIMESTAMP;
 
 CREATE TABLE forms (
     id bigint NOT NULL AUTO_INCREMENT,
     id_user bigint NOT NULL,
     name varchar(100) NOT NULL,
     id_form_type bigint(11),
-    created_at DATETIME NOT NULL,
-    updated_at DATETIME NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMP NOT NULL DEFAULT NOW() ON UPDATE now(),
     PRIMARY KEY (id)
 );
-ALTER TABLE forms
-MODIFY created_at datetime DEFAULT CURRENT_TIMESTAMP;
 
 CREATE TABLE form_types (
     id bigint NOT NULL AUTO_INCREMENT,
     name varchar(100) NOT NULL,
-    created_at DATETIME NOT NULL,
-    updated_at DATETIME NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMP NOT NULL DEFAULT NOW() ON UPDATE now(),
     PRIMARY KEY (id)
 );
-ALTER TABLE form_types
-MODIFY created_at datetime DEFAULT CURRENT_TIMESTAMP;
 
 CREATE TABLE form_activities (
     id bigint NOT NULL AUTO_INCREMENT,
     id_form_type bigint NOT NULL,
     name varchar(100) NOT NULL,
-    created_at DATETIME NOT NULL,
-    updated_at DATETIME NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMP NOT NULL DEFAULT NOW() ON UPDATE now(),
     PRIMARY KEY (id)
 );
-ALTER TABLE form_activities
-MODIFY created_at datetime DEFAULT CURRENT_TIMESTAMP;
 
 CREATE TABLE questions (
     id bigint NOT NULL AUTO_INCREMENT,
     id_form bigint NOT NULL,
-    id_questions_type bigint NOT NULL,
+    id_question_type bigint NOT NULL,
+    question varchar(255) NOT NULL,
     question_answer varchar(255) DEFAULT NULL,
     template varchar(255) DEFAULT NULL,
-    created_at DATETIME NOT NULL,
-    updated_at DATETIME NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMP NOT NULL DEFAULT NOW() ON UPDATE now(),
     PRIMARY KEY (id)
 );
-ALTER TABLE questions
-MODIFY created_at datetime DEFAULT CURRENT_TIMESTAMP;
+
+CREATE TABLE choices (
+    id bigint NOT NULL AUTO_INCREMENT,
+    choice varchar(255) NOT NULL,
+    img varchar(255),
+    created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMP NOT NULL DEFAULT NOW() ON UPDATE now(),
+    PRIMARY KEY (id)
+);
 
 CREATE TABLE question_types (
     id bigint NOT NULL AUTO_INCREMENT,
     name varchar(100) NOT NULL,
-    created_at DATETIME NOT NULL,
-    updated_at DATETIME NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMP NOT NULL DEFAULT NOW() ON UPDATE now(),
     PRIMARY KEY (id)
 );
-ALTER TABLE question_types
-MODIFY created_at datetime DEFAULT CURRENT_TIMESTAMP;
 
 INSERT INTO question_types ('id', 'name', 'created_at') VALUES 
 ('1', 'Welcome Screen', 2019-03-23 00:00:00),
@@ -101,12 +99,10 @@ INSERT INTO question_types ('id', 'name', 'created_at') VALUES
 CREATE TABLE entities (
     id bigint NOT NULL AUTO_INCREMENT,
     name varchar(100) NOT NULL,
-    created_at DATETIME NOT NULL,
-    updated_at DATETIME NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMP NOT NULL DEFAULT NOW() ON UPDATE now(),
     PRIMARY KEY (id)
 );
-ALTER TABLE entities
-MODIFY created_at datetime DEFAULT CURRENT_TIMESTAMP;
 
 INSERT INTO entities ('id', 'name', 'created_at') VALUES
 ('1', 'Description', 2019-03-23 00:00:00),
@@ -134,16 +130,14 @@ INSERT INTO entities ('id', 'name', 'created_at') VALUES
 
 CREATE TABLE question_entities (
     id bigint NOT NULL AUTO_INCREMENT,
-    id_questions_types bigint NOT NULL,
+    id_question_type bigint NOT NULL,
     id_entity bigint NOT NULL,
-    created_at DATETIME NOT NULL,
-    updated_at DATETIME NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMP NOT NULL DEFAULT NOW() ON UPDATE now(),
     PRIMARY KEY (id)
 );
-ALTER TABLE question_entities
-MODIFY created_at datetime DEFAULT CURRENT_TIMESTAMP;
 
-INSERT INTO question_entities ('id', 'id_questions_types', 'id_entity', 'created_at') VALUES
+INSERT INTO question_entities ('id', 'id_question_type', 'id_entity', 'created_at') VALUES
 ('1', '1', '1', 2019-03-23 00:00:00),
 ('2', '1', '2', 2019-03-23 00:00:00),
 ('3', '1', '2', 2019-03-23 00:00:00),
@@ -246,9 +240,7 @@ CREATE TABLE entity_values (
     id bigint NOT NULL AUTO_INCREMENT,
     id_entity bigint NOT NULL,
     id_question_value bigint NOT NULL,
-    created_at DATETIME NOT NULL,
-    updated_at DATETIME NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMP NOT NULL DEFAULT NOW() ON UPDATE now(),
     PRIMARY KEY (id)
 );
-ALTER TABLE entity_values
-MODIFY created_at datetime DEFAULT CURRENT_TIMESTAMP;
