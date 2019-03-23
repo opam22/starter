@@ -1,6 +1,7 @@
 CREATE TABLE todos (
-    id INT,
-    todo VARCHAR(100)
+    id INT NOT NULL AUTO_INCREMENT,
+    todo VARCHAR(100),
+    PRIMARY key (id)
 );
 
 INSERT INTO todos (id, todo) VALUES (1, 'Coding');

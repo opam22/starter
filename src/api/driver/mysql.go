@@ -31,6 +31,12 @@ func (handler *MySQLHandler) Query(statement string) (Row, error) {
 	return row, nil
 }
 
+func (handler *MySQLHandler) QueryRow(statement string) *sql.Row {
+	row := handler.Conn.QueryRow(statement)
+
+	return row
+}
+
 type MySQLRow struct {
 	Rows *sql.Rows
 }
