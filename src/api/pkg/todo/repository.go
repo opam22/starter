@@ -47,7 +47,7 @@ func (r *TodoRepository) FindAll() ([]Todo, error) {
 }
 
 func (r *TodoRepository) Store(todo Todo) (int64, error) {
-	res, err := r.Execute(fmt.Sprintf("INSERT INTO todos(name) VALUES ('%s')", todo.Todo))
+	res, err := r.Execute(fmt.Sprintf("INSERT INTO todos(todo) VALUES ('%s')", todo.Todo))
 
 	if err != nil {
 		return 0, err
