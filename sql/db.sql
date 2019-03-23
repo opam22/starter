@@ -60,6 +60,7 @@ CREATE TABLE questions (
 
 CREATE TABLE choices (
     id bigint NOT NULL AUTO_INCREMENT,
+    id_question bigint NOT NULL,
     choice varchar(255) NOT NULL,
     img varchar(255),
     created_at TIMESTAMP NOT NULL DEFAULT NOW(),
