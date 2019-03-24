@@ -2,6 +2,7 @@ package auth
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 )
 
@@ -11,19 +12,36 @@ type AuthController struct {
 
 func (c *AuthController) Login(w http.ResponseWriter, r *http.Request) {
 
-	var loginCredential LoginCredential
+	var (
+		loginCredential LoginCredential
+		httpResponse    HTTPResponse
+	)
+
+	httpResponse.Message = "Success"
 
 	if err := json.NewDecoder(r.Body).Decode(&loginCredential); err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		httpResponse.Message = err.Error()
 	}
 
-	res, err := c.Service.Login(loginCredential)
+	tokenString, expirationTime, err := c.Service.Login(loginCredential)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		httpResponse.Message = err.Error()
 	}
 
-	if err := json.NewEncoder(w).Encode(res); err != nil {
+	fmt.Printf("%v", expirationTime)
+
+	http.SetCookie(w, &http.Cookie{
+		Name:    "jwttokenvanara",
+		Value:   tokenString,
+		Expires: expirationTime,
+		Path:    "/",
+	})
+
+	httpResponse.StatusCode = http.StatusOK
+
+	if err := json.NewEncoder(w).Encode(httpResponse); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
 	}
 
 }

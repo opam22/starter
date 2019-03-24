@@ -1,13 +1,15 @@
 package auth
 
-type Writer interface {
-	Login(login LoginCredential) (int64, error)
+import "time"
+
+type Reader interface {
+	Login(login LoginCredential) (string, time.Time, error)
 }
 
 type Repository interface {
-	Writer
+	Reader
 }
 
 type UseCase interface {
-	Writer
+	Reader
 }

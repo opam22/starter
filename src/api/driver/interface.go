@@ -1,6 +1,9 @@
 package driver
 
-import "database/sql"
+import (
+	"database/sql"
+	"time"
+)
 
 type DBHandler interface {
 	Execute(statement string) (sql.Result, error)
@@ -11,4 +14,8 @@ type DBHandler interface {
 type Row interface {
 	Scan(dest ...interface{}) error
 	Next() bool
+}
+
+type JWTHandler interface {
+	SetJWT(email string) (string, time.Time, error)
 }

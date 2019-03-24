@@ -3,13 +3,14 @@ package auth
 import (
 	"crypto/sha512"
 	"errors"
+	"time"
 )
 
 type AuthService struct {
 	Repo Repository
 }
 
-func (s *AuthService) Login(loginCredential LoginCredential) (int64, error) {
+func (s *AuthService) Login(loginCredential LoginCredential) (string, time.Time, error) {
 	// logic here
 
 	// convert type interface{} to string
@@ -22,6 +23,6 @@ func (s *AuthService) Login(loginCredential LoginCredential) (int64, error) {
 		return s.Repo.Login(loginCredential)
 	}
 
-	return 0, errors.New("Something wrong with your password.")
+	return "", time.Time{}, errors.New("Something wrong with your password.")
 
 }
