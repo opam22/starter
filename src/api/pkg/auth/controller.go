@@ -19,11 +19,15 @@ func (c *AuthController) Login(w http.ResponseWriter, r *http.Request) {
 		httpResponse    helper.HTTPResponse
 	)
 
-	httpResponse.Status = "ok"
-
 	if err := json.NewDecoder(r.Body).Decode(&loginCredential); err != nil {
 		httpResponse.Message = err.Error()
 		httpResponse.Status = "error"
+
+		if err := json.NewEncoder(w).Encode(httpResponse); err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+		}
+
+		return
 
 	}
 
@@ -31,6 +35,12 @@ func (c *AuthController) Login(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		httpResponse.Message = err.Error()
 		httpResponse.Status = "error"
+
+		if err := json.NewEncoder(w).Encode(httpResponse); err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+		}
+
+		return
 	}
 
 	http.SetCookie(w, &http.Cookie{
@@ -39,6 +49,8 @@ func (c *AuthController) Login(w http.ResponseWriter, r *http.Request) {
 		Expires: expirationTime,
 		Path:    "/",
 	})
+
+	httpResponse.Status = "ok"
 
 	if err := json.NewEncoder(w).Encode(httpResponse); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
