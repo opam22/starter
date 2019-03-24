@@ -43,6 +43,7 @@ func (c *AuthController) Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// if all goes well, set jwt cookie
 	http.SetCookie(w, &http.Cookie{
 		Name:    "jwttokenvanara",
 		Value:   tokenString,
