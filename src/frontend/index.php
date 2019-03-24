@@ -23,6 +23,9 @@ switch ($pages) {
     case 'register':
         echo $twig->render('register.twig');
         break;
+    case 'createQ':
+        echo $twig->render('workspace/create_question.twig');
+        break;
     default:
         header('HTTP/1.0 404 Not Found');
         echo 'Page Not Found 404';

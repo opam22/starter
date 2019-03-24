@@ -1,16 +1,49 @@
 {% include 'partial/cssAssets.twig' %}
 
+    {% include 'partial/sidebar.twig' %}
     {% include 'partial/header.twig' %}
         <div class="row">
-            <div class="col-lg-12">
-                <div class="user-workspace">
-                    <div class="col-lg-3">
-                        <div class="wp-card">
-                            <button class="btn wp-btn btn-secondary"><p><i class="ti-plus"></i></p>Create Question</button>
-                        </div>
-                    </div>
+            <div class="col-xs-2">
+                <div class="wp-card">
+                    <button id="create-question" class="btn wp-btn btn-secondary"><p><i class="ti-plus"></i></p>Create Question</button>
+                </div>
+            </div>
+            <div class="col-xs-2">
+                <div class="wp-card">
+                    <a class="btn wp-btn btn-secondary"><p><img src="https://placehold.it/143x140"></img></p>Question 1</a>
+                </div>
+            </div>
+            <div class="col-xs-2">
+                <div class="wp-card">
+                    <a class="btn wp-btn btn-secondary"><p><img src="https://placehold.it/143x140"></img></p>Question 2</a>
+                </div>
+            </div>
+            <div class="col-xs-2">
+                <div class="wp-card">
+                    <a class="btn wp-btn btn-secondary"><p><img src="https://placehold.it/143x140"></img></p>Question 3</a>
+                </div>
+            </div>
+            <div class="col-xs-2">
+                <div class="wp-card">
+                    <a class="btn wp-btn btn-secondary"><p><img src="https://placehold.it/143x140"></img></p>Question 4</a>
+                </div>
+            </div>
+            <div class="col-xs-2">
+                <div class="wp-card">
+                    <a class="btn wp-btn btn-secondary"><p><img src="https://placehold.it/143x140"></img></p>Question 5</a>
+                </div>
+            </div>
+            <div class="col-xs-2">
+                <div class="wp-card">
+                    <a class="btn wp-btn btn-secondary"><p><img src="https://placehold.it/143x140"></img></p>Question 6</a>
                 </div>
             </div>
         </div>
-
-{% include 'partial/jsAssets.twig' %}
+    {% include 'partial/jsAssets.twig' %}
+<script>
+$(document).ready(function(){
+    $('#create-question').on('click', function(){
+        window.location = '?p=createQ';
+    })
+})
+</script>
