@@ -49,12 +49,12 @@ func (claim *Claim) CheckJWT(tokenString string) error {
 	})
 
 	if !token.Valid {
-		return errors.New("not valid")
+		return errors.New("unauthorized")
 	}
 
 	if err != nil {
 		if err == jwt.ErrSignatureInvalid {
-			return errors.New("Unauthorized")
+			return errors.New("unauthorized")
 		}
 		return errors.New("bad request")
 	}

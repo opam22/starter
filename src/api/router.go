@@ -43,6 +43,7 @@ func (router *router) Init() *chi.Mux {
 	r.Post("/store", todo.Store)
 
 	r.Post("/auth/login", auth.Login)
+	r.Get("/auth/logout", auth.Logout)
 
 	return r
 }

@@ -35,3 +35,12 @@ func (r *AuthRepository) Login(loginCredential LoginCredential) (string, time.Ti
 
 	return tokenString, expirationTime, nil
 }
+
+func (r *AuthRepository) Logout(tokenStr string) error {
+
+	err := r.JWT.CheckJWT(tokenStr)
+	if err != nil {
+		return err
+	}
+	return nil
+}
