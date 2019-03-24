@@ -11,6 +11,16 @@ services:
       - ./db_data:/var/lib/mysql
       - ./sql/db.sql:/docker-entrypoint-initdb.d/dump.sql
     container_name: form-db
+  php:
+    build:
+      context: ./src/frontend
+      dockerfile: Dockerfile
+    depends_on:
+      - api
+    volumes:
+      - ./src/frontend:/src/frontend
+      - ./conf/php.ini:/usr/local/etc/php/conf.d/php.ini
+    container_name: form-php
   api:
     build:
       context: ./src/api
@@ -24,12 +34,12 @@ services:
       - "6789:6789"
     tty: true
     depends_on:
-      - web
+      - db
     container_name: form-api
   web:
     image: nginx
     depends_on:
-      - db
+      - php
     ports:
       - "6969:80"
     volumes:

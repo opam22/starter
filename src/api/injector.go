@@ -5,11 +5,13 @@ import (
 	"sync"
 
 	"github.com/opam22/form/driver"
+	"github.com/opam22/form/pkg/auth"
 	"github.com/opam22/form/pkg/todo"
 )
 
 type DepedencyInjector interface {
 	InjectTodo(sqlConn *sql.DB) todo.TodoController
+	InjectAuth(sqlConn *sql.DB) auth.AuthController
 }
 
 type depedency struct{}
@@ -24,6 +26,20 @@ func (d *depedency) InjectTodo(sqlConn *sql.DB) todo.TodoController {
 	todoController := todo.TodoController{todoService}
 
 	return todoController
+}
+
+func (d *depedency) InjectAuth(sqlConn *sql.DB) auth.AuthController {
+
+	DBHandler := &driver.MySQLHandler{}
+	DBHandler.Conn = sqlConn
+
+	JWTHandler := &driver.Claim{}
+
+	authRepository := &auth.AuthRepository{DB: DBHandler, JWT: JWTHandler}
+	authService := &auth.AuthService{authRepository}
+	authController := auth.AuthController{authService}
+
+	return authController
 }
 
 func Depedency() DepedencyInjector {

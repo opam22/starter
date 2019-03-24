@@ -26,6 +26,7 @@ func (router *router) Init() *chi.Mux {
 	}
 
 	todo := Depedency().InjectTodo(sqlConn)
+	auth := Depedency().InjectAuth(sqlConn)
 
 	r := chi.NewRouter()
 
@@ -37,9 +38,11 @@ func (router *router) Init() *chi.Mux {
 	r.Use(middleware.Timeout(60 * time.Second))
 
 	// route
-	r.Get("/todo/{id}", todo.Find)
+	r.Get("/todo/{id}", mustLogin(todo.Find))
 	r.Get("/todos", todo.FindAll)
 	r.Post("/store", todo.Store)
+
+	r.Post("/auth/login", auth.Login)
 
 	return r
 }
