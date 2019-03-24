@@ -7,7 +7,7 @@
     <title>Nopi <3 Sayuti</title>
 </head>
 <body>
-    <h1>Nopi <3 Sayuti Uhuyyyy...</h1>
+    <h1><?php echo "NOPI" ?> <3 Sayuti Uhuyyyy...</h1>
     <h3>plerketekukkk uhuyy...</h3>
 </body>
 </html>

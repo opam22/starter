@@ -1,32 +1,37 @@
 package auth
 
 import (
+	"errors"
 	"fmt"
+	"time"
 
 	"github.com/opam22/form/driver"
 )
 
 type AuthRepository struct {
-	driver.DBHandler
+	DB  driver.DBHandler
+	JWT driver.JWTHandler
 }
 
-func (r *AuthRepository) Login(loginCredential LoginCredential) (int64, error) {
+func (r *AuthRepository) Login(loginCredential LoginCredential) (string, time.Time, error) {
 
 	var count int
 
-	err := r.QueryRow(fmt.Sprintf("SELECT count(*) FROM users WHERE email = '%s' AND password = '%x' LIMIT 1", loginCredential.Email, loginCredential.Password)).Scan(&count)
-	switch {
-	case err != nil:
-		return 0, err
-	default:
-		// TODO
-		// USE JWT
-		fmt.Printf("\nNumber of rows are %d\n", count)
-	}
+	err := r.DB.QueryRow(fmt.Sprintf("SELECT count(*) FROM users WHERE email = '%s' AND password = '%x' LIMIT 1", loginCredential.Email, loginCredential.Password)).Scan(&count)
 
 	if err != nil {
-		return 0, err
+		return "", time.Time{}, err
 	}
 
-	return 1, nil
+	if count == 0 {
+		return "", time.Time{}, errors.New("Account not found")
+	}
+
+	tokenString, expirationTime, err := r.JWT.SetJWT(fmt.Sprintf("%s", loginCredential.Email))
+
+	if err != nil {
+		return "", time.Time{}, err
+	}
+
+	return tokenString, expirationTime, nil
 }

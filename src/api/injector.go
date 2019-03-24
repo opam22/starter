@@ -33,7 +33,9 @@ func (d *depedency) InjectAuth(sqlConn *sql.DB) auth.AuthController {
 	DBHandler := &driver.MySQLHandler{}
 	DBHandler.Conn = sqlConn
 
-	authRepository := &auth.AuthRepository{DBHandler}
+	JWTHandler := &driver.Claim{}
+
+	authRepository := &auth.AuthRepository{DB: DBHandler, JWT: JWTHandler}
 	authService := &auth.AuthService{authRepository}
 	authController := auth.AuthController{authService}
 
