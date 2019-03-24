@@ -26,3 +26,9 @@ func (s *AuthService) Login(loginCredential LoginCredential) (string, time.Time,
 	return "", time.Time{}, errors.New("Something wrong with your password.")
 
 }
+
+func (s *AuthService) Logout(tokenStr string) error {
+
+	return s.Repo.Logout(tokenStr)
+
+}

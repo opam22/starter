@@ -18,4 +18,5 @@ type Row interface {
 
 type JWTHandler interface {
 	SetJWT(email string) (string, time.Time, error)
+	CheckJWT(tokenString string) error
 }
