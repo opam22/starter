@@ -1,11 +1,4 @@
                     <!-- /# row -->
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="footer">
-                                <p class="footer-text">This dashboard was generated on <span id="date-time"></span> <a href="#" class="page-refresh">Refresh Dashboard</a></p>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -39,6 +32,20 @@
     <script src="assets/js/lib/owl-carousel/owl.carousel-init.js"></script>
     <script src="assets/js/scripts.js"></script>
     <!-- scripit init-->
+
+    <script>
+        $(window).resize(function() {
+            console.log('berubah')
+        var wrapWidth = $(window).width();
+            if (wrapWidth < 800) {
+                $('#w-nav').removeClass('sidebar sidebar-hide-to-small sidebar-shrink sidebar-gestures');
+                $('#w-nav').addClass('sm-menu sidebar-small-to-hide');
+            } else {
+                $('#w-nav').removeClass('sm-menu sidebar-small-to-hide');
+                $('#w-nav').addClass('sidebar sidebar-hide-to-small sidebar-shrink sidebar-gestures');
+            }
+        });
+    </script>
 </body>
 
 </html>
