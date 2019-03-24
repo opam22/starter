@@ -3741,7 +3741,7 @@ p {
 /*    Background Mixins
 --------------------------*/
 .bg-primary {
-  background: #03a9f5;
+  background-color: #3f4456!important;
   color: #ffffff;
   fill: #03a9f5;
 }
