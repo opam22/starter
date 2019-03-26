@@ -1,6 +1,7 @@
 CREATE TABLE todos (
-    id INT,
-    todo VARCHAR(100)
+    id INT NOT NULL AUTO_INCREMENT,
+    todo VARCHAR(100),
+    PRIMARY key (id)
 );
 
 INSERT INTO todos (id, todo) VALUES (1, 'Coding');
@@ -18,84 +19,4 @@ CREATE TABLE users (
     PRIMARY KEY (id)
 );
 
-CREATE TABLE forms (
-    id bigint NOT NULL AUTO_INCREMENT,
-    id_user bigint NOT NULL,
-    name varchar(100) NOT NULL,
-    id_form_type bigint(11),
-    created_at TIMESTAMP NOT NULL DEFAULT NOW(),
-    updated_at TIMESTAMP NOT NULL DEFAULT NOW() ON UPDATE now(),
-    PRIMARY KEY (id)
-);
-
-CREATE TABLE form_types (
-    id bigint NOT NULL AUTO_INCREMENT,
-    name varchar(100) NOT NULL,
-    created_at TIMESTAMP NOT NULL DEFAULT NOW(),
-    updated_at TIMESTAMP NOT NULL DEFAULT NOW() ON UPDATE now(),
-    PRIMARY KEY (id)
-);
-
-CREATE TABLE form_activities (
-    id bigint NOT NULL AUTO_INCREMENT,
-    id_form_type bigint NOT NULL,
-    name varchar(100) NOT NULL,
-    created_at TIMESTAMP NOT NULL DEFAULT NOW(),
-    updated_at TIMESTAMP NOT NULL DEFAULT NOW() ON UPDATE now(),
-    PRIMARY KEY (id)
-);
-
-CREATE TABLE questions (
-    id bigint NOT NULL AUTO_INCREMENT,
-    id_form bigint NOT NULL,
-    id_questions_type bigint NOT NULL,
-    question varchar(255) NOT NULL,
-    question_answer varchar(255) DEFAULT NULL,
-    template varchar(255) DEFAULT NULL,
-    created_at TIMESTAMP NOT NULL DEFAULT NOW(),
-    updated_at TIMESTAMP NOT NULL DEFAULT NOW() ON UPDATE now(),
-    PRIMARY KEY (id)
-);
-
-CREATE TABLE choices (
-    id bigint NOT NULL AUTO_INCREMENT,
-    choice varchar(255) NOT NULL,
-    img varchar(255),
-    created_at TIMESTAMP NOT NULL DEFAULT NOW(),
-    updated_at TIMESTAMP NOT NULL DEFAULT NOW() ON UPDATE now(),
-    PRIMARY KEY (id)
-);
-
-CREATE TABLE question_types (
-    id bigint NOT NULL AUTO_INCREMENT,
-    name varchar(100) NOT NULL,
-    created_at TIMESTAMP NOT NULL DEFAULT NOW(),
-    updated_at TIMESTAMP NOT NULL DEFAULT NOW() ON UPDATE now(),
-    PRIMARY KEY (id)
-);
-
-CREATE TABLE question_entities (
-    id bigint NOT NULL AUTO_INCREMENT,
-    id_questions_types bigint NOT NULL,
-    id_entity bigint NOT NULL,
-    created_at TIMESTAMP NOT NULL DEFAULT NOW(),
-    updated_at TIMESTAMP NOT NULL DEFAULT NOW() ON UPDATE now(),
-    PRIMARY KEY (id)
-);
-
-CREATE TABLE entities (
-    id bigint NOT NULL AUTO_INCREMENT,
-    name varchar(100) NOT NULL,
-    created_at TIMESTAMP NOT NULL DEFAULT NOW(),
-    updated_at TIMESTAMP NOT NULL DEFAULT NOW() ON UPDATE now(),
-    PRIMARY KEY (id)
-);
-
-CREATE TABLE entity_values (
-    id bigint NOT NULL AUTO_INCREMENT,
-    id_entity bigint NOT NULL,
-    id_question_value bigint NOT NULL,
-    created_at TIMESTAMP NOT NULL DEFAULT NOW(),
-    updated_at TIMESTAMP NOT NULL DEFAULT NOW() ON UPDATE now(),
-    PRIMARY KEY (id)
-);
+INSERT INTO users (name, email, password, activation_code, status) VALUES ('admin', 'admin@admin.com', 'C7AD44CBAD762A5DA0A452F9E854FDC1E0E7A52A38015F23F3EAB1D80B931DD472634DFAC71CD34EBC35D16AB7FB8A90C81F975113D6C7538DC69DD8DE9077EC', '123', 1);

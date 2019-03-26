@@ -7,8 +7,9 @@ import (
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
+	"github.com/go-chi/cors"
 	"github.com/go-chi/render"
-	"github.com/opam22/form/config"
+	"github.com/opam22/starter/config"
 )
 
 type Router interface {
@@ -26,6 +27,15 @@ func (router *router) Init() *chi.Mux {
 	}
 
 	todo := Depedency().InjectTodo(sqlConn)
+	auth := Depedency().InjectAuth(sqlConn)
+
+	cors := cors.New(cors.Options{
+		AllowedOrigins:   []string{"*"},
+		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowedHeaders:   []string{"Accept", "Content-Type", "Authorization"},
+		AllowCredentials: true,
+		Debug:            true,
+	})
 
 	r := chi.NewRouter()
 
@@ -33,13 +43,17 @@ func (router *router) Init() *chi.Mux {
 	r.Use(middleware.Logger)
 	r.Use(middleware.Recoverer)
 	r.Use(middleware.URLFormat)
+	r.Use(cors.Handler)
 	r.Use(render.SetContentType(render.ContentTypeJSON))
 	r.Use(middleware.Timeout(60 * time.Second))
 
 	// route
-	r.Get("/todo/{id}", todo.Find)
+	r.Get("/todo/{id}", mustLogin(todo.Find))
 	r.Get("/todos", todo.FindAll)
 	r.Post("/store", todo.Store)
+
+	r.Post("/auth/login", auth.Login)
+	r.Get("/auth/logout", auth.Logout)
 
 	return r
 }

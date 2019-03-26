@@ -1,3 +1,5 @@
 .DS_STORE
 log
 db_data
+
+src/api/reflex.conf
