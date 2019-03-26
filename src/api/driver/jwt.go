@@ -5,7 +5,7 @@ import (
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
-	"github.com/opam22/form/config"
+	"github.com/opam22/starter/config"
 )
 
 var jwtKey = []byte(config.JWT_SECRET_KEY)

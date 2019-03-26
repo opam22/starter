@@ -1,33 +1,12 @@
-<?php
-
-require 'vendor/autoload.php';
-
-
-$pages = 'index';
-if (isset($_GET['p'])) {
-    $pages = $_GET['p'];
-}
-
-
-$loader = new Twig_Loader_Filesystem('views');
-$twig = new Twig_Environment($loader);
-
-
-switch ($pages) {
-    case 'index':
-        echo $twig->render('main.twig');
-        break;
-    case 'dashboard':
-        echo $twig->render('content/main_page.twig');
-        break;
-    case 'register':
-        echo $twig->render('register.twig');
-        break;
-    case 'createQ':
-        echo $twig->render('workspace/create_question.twig');
-        break;
-    default:
-        header('HTTP/1.0 404 Not Found');
-        echo 'Page Not Found 404';
-        break;
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Frontend</title>
+</head>
+<body>
+    <?php echo "Hello, world"; ?>
+</body>
+</html>

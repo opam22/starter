@@ -9,7 +9,7 @@ import (
 	"github.com/go-chi/chi/middleware"
 	"github.com/go-chi/cors"
 	"github.com/go-chi/render"
-	"github.com/opam22/form/config"
+	"github.com/opam22/starter/config"
 )
 
 type Router interface {

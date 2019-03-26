@@ -1,4 +1,4 @@
-module github.com/opam22/form
+module github.com/opam22/starter
 
 require (
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible

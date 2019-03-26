@@ -4,9 +4,9 @@ import (
 	"database/sql"
 	"sync"
 
-	"github.com/opam22/form/driver"
-	"github.com/opam22/form/pkg/auth"
-	"github.com/opam22/form/pkg/todo"
+	"github.com/opam22/starter/driver"
+	"github.com/opam22/starter/pkg/auth"
+	"github.com/opam22/starter/pkg/todo"
 )
 
 type DepedencyInjector interface {

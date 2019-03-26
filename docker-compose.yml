@@ -5,12 +5,12 @@ services:
     ports:
       - "6666:3306"
     environment:
-      - MYSQL_ROOT_PASSWORD=4kuC1ntaBangsay
-      - MYSQL_DATABASE=form
+      - MYSQL_ROOT_PASSWORD=pl3rk3TecUck
+      - MYSQL_DATABASE=starter
     volumes:
       - ./db_data:/var/lib/mysql
       - ./sql/db.sql:/docker-entrypoint-initdb.d/dump.sql
-    container_name: form-db
+    container_name: starter-db
   php:
     build:
       context: ./src/frontend
@@ -20,7 +20,7 @@ services:
     volumes:
       - ./src/frontend:/src/frontend
       - ./conf/php.ini:/usr/local/etc/php/conf.d/php.ini
-    container_name: form-php
+    container_name: starter-php
   api:
     build:
       context: ./src/api
@@ -35,7 +35,7 @@ services:
     tty: true
     depends_on:
       - db
-    container_name: form-api
+    container_name: starter-api
   web:
     image: nginx
     depends_on:
@@ -46,4 +46,4 @@ services:
       - ./src/frontend:/src/frontend
       - ./conf/nginx.conf:/etc/nginx/conf.d/app.conf
       - ./log:/var/log/nginx
-    container_name: form-web    
+    container_name: starter-web    
